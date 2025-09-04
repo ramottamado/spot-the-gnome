@@ -1,8 +1,8 @@
 [Unit]
-Description=WinSpotlightKDE
+Description=Spot the GNOME
 
 [Timer]
-Unit=winspotlightkde.service
+Unit=spot-the-gnome.service
 OnCalendar=*-*-* 00:00:00
 Persistent=true
 

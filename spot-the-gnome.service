@@ -1,0 +1,7 @@
+[Unit]
+Description=Spot the GNOME
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/opt/spot-the-gnome
