@@ -3,6 +3,7 @@ Description=Spot the GNOME
 
 [Timer]
 Unit=spot-the-gnome.service
+OnStartupSec=30s
 OnCalendar=*-*-* 00:00:00
 Persistent=true
 
