@@ -4,4 +4,4 @@ After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=%h/.local/bin/spot-the-gnome
+ExecStart=/opt/spot-the-gnome
