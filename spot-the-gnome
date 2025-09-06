@@ -3,10 +3,22 @@
 set -ex
 
 clean_exit() {
+        delete_old_images
         exit 0
 }
 
-trap clean_exit ERR
+# Delete any images that are old enough
+delete_old_images() {
+        if [ $retention_days -gt 0 ]; then
+                for name in "${img_path}"/*.jpeg; do
+                        if [ $(( ($(date +%s) - $(stat -c %Y "${name}")) / 60 / 60 / 24 )) -ge $retention_days ]; then
+                                gio trash "${name}"
+                        fi
+                done
+        fi
+}
+
+trap clean_exit EXIT
 
 # The locale for the images that will be downloaded
 locale=en-GB
@@ -45,12 +57,3 @@ curl -s "https://bing.com${image_url}" -o "${img_name}"
 # Set the wallpaper for the desktop
 gsettings set org.gnome.desktop.background picture-uri "file://${img_name}"
 gsettings set org.gnome.desktop.background picture-uri-dark "file://${img_name}"
-
-# Delete any images that are old enough
-if [ $retention_days -gt 0 ]; then
-        for name in "${img_path}"/*.jpeg; do
-                if [ $(( ($(date +%s) - $(stat -c %Y "${name}")) / 60 / 60 / 24 )) -ge $retention_days ]; then
-                        gio trash "${name}"
-                fi
-        done
-fi
