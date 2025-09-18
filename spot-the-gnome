@@ -18,6 +18,12 @@ delete_old_images() {
         fi
 }
 
+# Set the wallpaper for the desktop
+set_wallpaper() {
+        gsettings set org.gnome.desktop.background picture-uri "file://${1}"
+        gsettings set org.gnome.desktop.background picture-uri-dark "file://${1}"
+}
+
 trap clean_exit EXIT
 
 # The locale for the images that will be downloaded
@@ -48,12 +54,11 @@ img_name="${img_path}/${image_title}.jpeg"
 
 # Exit if the image already exists
 if [ -f "${img_name}" ]; then
+        set_wallpaper "${img_name}"
         exit 0
 fi
 
 # Download the image
 curl -s "https://bing.com${image_url}" -o "${img_name}"
 
-# Set the wallpaper for the desktop
-gsettings set org.gnome.desktop.background picture-uri "file://${img_name}"
-gsettings set org.gnome.desktop.background picture-uri-dark "file://${img_name}"
+set_wallpaper "${img_name}"
