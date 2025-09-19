@@ -4,4 +4,6 @@ After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/opt/spot-the-gnome/spot-the-gnome
+ExecStart=%h/.local/bin/spot-the-gnome
+Restart=on-failure
+RestartSec=30

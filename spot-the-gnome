@@ -3,8 +3,9 @@
 set -ex
 
 clean_exit() {
+        local exit_code=$?
         delete_old_images
-        exit 0
+        exit $exit_code
 }
 
 # Delete any images that are old enough
